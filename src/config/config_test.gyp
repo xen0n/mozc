@@ -36,6 +36,7 @@
         'config_handler_test.cc',
       ],
       'dependencies': [
+        '../base/absl.gyp:absl_base',
         '../base/absl.gyp:absl_random',
         '../base/absl.gyp:absl_strings',
         '../base/absl.gyp:absl_synchronization',
@@ -72,6 +73,7 @@
         'stats_config_util_test.cc',
       ],
       'dependencies': [
+        '../base/absl.gyp:absl_base',
         '../testing/testing.gyp:gtest_main',
         'config.gyp:stats_config_util',
         'install_stats_config_util_test_data',
@@ -87,6 +89,7 @@
         'character_form_manager_test.cc',
       ],
       'dependencies': [
+        '../base/absl.gyp:absl_base',
         '../testing/testing.gyp:gtest_main',
         'config.gyp:character_form_manager',
       ],

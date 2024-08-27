@@ -126,6 +126,7 @@
       ],
       'dependencies': [
         '../base/base.gyp:base',
+        '../base/base.gyp:base_core',
         '../base/base.gyp:japanese_util',
         '../base/base.gyp:serialized_string_array',
         '../data_manager/data_manager_base.gyp:data_manager',
@@ -143,6 +144,7 @@
       ],
       'dependencies': [
         '../base/base.gyp:base',
+        '../base/base.gyp:base_core',
         '../base/base.gyp:serialized_string_array',
       ],
     },
@@ -154,8 +156,9 @@
         'gen_emoticon_rewriter_data.cc',
       ],
       'dependencies': [
-        '../base/absl.gyp:absl_strings',
+        '../base/absl.gyp:absl_flags_internal',
         '../base/base.gyp:base',
+        '../base/base.gyp:base_core',
         '../data_manager/data_manager_base.gyp:serialized_dictionary',
       ],
     },

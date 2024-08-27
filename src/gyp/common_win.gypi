@@ -318,9 +318,15 @@
     'include_dirs': [
       '<(abs_depth)',
       '<(SHARED_INTERMEDIATE_DIR)',
-      '<(absl_dir)',
       '<@(msvs_includes)',
       '<(wtl_dir)/include',
+    ],
+    'conditions': [
+      ['use_system_abseil_cpp==0', {
+        'include_dirs': [
+          '<(absl_dir)',
+        ],
+      }],
     ],
     'msvs_configuration_attributes': {
       'CharacterSet': '<(win_char_set_unicode)',

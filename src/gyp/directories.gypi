@@ -31,7 +31,12 @@
   'variables': {
     # Top directory of third party libraries.
     'third_party_dir': '<(DEPTH)/third_party',
-    'absl_dir': '<(DEPTH)/third_party/abseil-cpp',
+
+    'conditions': [
+      ['use_system_abseil_cpp==0', {
+        'absl_dir': '<(DEPTH)/third_party/abseil-cpp',
+      }],
+    ],
 
     # Top directory of additional third party libraries.
     'ext_third_party_dir%': '<(abs_depth)/third_party',

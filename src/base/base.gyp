@@ -117,6 +117,8 @@
         'gen_character_set#host',
         'hash',
         'singleton',
+        'absl.gyp:absl_flags',
+        'absl.gyp:absl_flags_internal',
         'absl.gyp:absl_random',
         'absl.gyp:absl_status',
         'absl.gyp:absl_strings',

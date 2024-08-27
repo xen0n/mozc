@@ -200,6 +200,7 @@
         'internal/key_event_transformer_test.cc',
       ],
       'dependencies': [
+        '../base/absl.gyp:absl_base',
         '../base/base.gyp:base',
         '../protocol/protocol.gyp:commands_proto',
         '../protocol/protocol.gyp:config_proto',

@@ -194,7 +194,13 @@
     'include_dirs': [
       '<(abs_depth)',
       '<(SHARED_INTERMEDIATE_DIR)',
-      '<(absl_dir)',
+    ],
+    'conditions': [
+      ['use_system_abseil_cpp==0', {
+        'include_dirs': [
+          '<(absl_dir)',
+        ],
+      }],
     ],
     'mac_framework_headers': [],
     'target_conditions': [

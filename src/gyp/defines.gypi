@@ -68,6 +68,10 @@
     # use_libibus represents if ibus library is used or not.
     # This option is only for Linux.
     'use_libibus%': '0',
+
+    # use_system_abseil_cpp represents if system version or bundled version
+    # of abseil-cpp library is used.
+    'use_system_abseil_cpp%': '0',
   },
   'target_defaults': {
     'defines': [
