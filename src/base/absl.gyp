@@ -398,7 +398,7 @@
           'all_dependent_settings': {
             'link_settings': {
               'libraries': [
-                '-labsl_synchronization -labsl_flags -labsl_graphcycles_internal',
+                '-labsl_synchronization -labsl_flags -labsl_graphcycles_internal -labsl_string_view',
               ],
             },
           },
