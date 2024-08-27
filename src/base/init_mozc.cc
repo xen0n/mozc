@@ -87,7 +87,10 @@ std::string GetLogFilePathFromProgramName(const std::string &program_name) {
 void ParseCommandLineFlags(int argc, char **argv) {
   absl::flags_internal::ParseCommandLineImpl(
       argc, argv,
+      #if defined(ABSL_LTS_RELEASE_VERSION) && ABSL_LTS_RELEASE_VERSION < 20230802
+      // Abseil 20230802.0 does not use ArgvListAction
       absl::flags_internal::ArgvListAction::kRemoveParsedArgs,
+      #endif
       // Suppress help messages invoked by --help and others.
       // Use UsageFlagsAction::kHandleUsage to enable it.
       absl::flags_internal::UsageFlagsAction::kIgnoreUsage,
