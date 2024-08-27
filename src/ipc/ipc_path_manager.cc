@@ -338,9 +338,21 @@ bool IPCPathManager::IsValidServer(uint32_t pid,
     return false;
   }
 
+  // Expand symbolic links in the expected server path to avoid false negatives
+  // during comparisons of the expected server path and the actual server path.
+  std::string real_server_path = std::string(server_path);
+#ifndef _WIN32
+  char real_server_path_[PATH_MAX];
+  if (realpath(real_server_path.c_str(), real_server_path_) == NULL) {
+    LOG(ERROR) << "realpath failed: " << strerror(errno);
+    return false;
+  }
+  real_server_path = std::string(real_server_path_);
+#endif
+
   // compare path name
   if (pid == server_pid_) {
-    return (server_path == server_path_);
+    return (real_server_path == server_path_);
   }
 
   server_pid_ = 0;
@@ -350,17 +362,17 @@ bool IPCPathManager::IsValidServer(uint32_t pid,
   {
     std::wstring expected_server_ntpath;
     const std::map<std::string, std::wstring>::const_iterator it =
-        expected_server_ntpath_cache_.find(server_path);
+        expected_server_ntpath_cache_.find(real_server_path);
     if (it != expected_server_ntpath_cache_.end()) {
       expected_server_ntpath = it->second;
     } else {
       std::wstring wide_server_path;
-      Util::Utf8ToWide(server_path, &wide_server_path);
+      Util::UTF8ToWide(real_server_path, &wide_server_path);
       if (WinUtil::GetNtPath(wide_server_path, &expected_server_ntpath)) {
-        // Caches the relationship from |server_path| to
-        // |expected_server_ntpath| in case |server_path| is renamed later.
+        // Caches the relationship from |real_server_path| to
+        // |expected_server_ntpath| in case |real_server_path| is renamed later.
         // (This can happen during the updating).
-        expected_server_ntpath_cache_.emplace(server_path,
+        expected_server_ntpath_cache_.emplace(real_server_path,
                                               expected_server_ntpath);
       }
     }
@@ -378,9 +390,9 @@ bool IPCPathManager::IsValidServer(uint32_t pid,
       return false;
     }
 
-    // Here we can safely assume that |server_path| (expected one) should be
+    // Here we can safely assume that |real_server_path| (expected one) should be
     // the same to |server_path_| (actual one).
-    server_path_ = std::string(server_path);
+    server_path_ = std::string(real_server_path);
     server_pid_ = pid;
   }
 #endif  // _WIN32
@@ -405,7 +417,7 @@ bool IPCPathManager::IsValidServer(uint32_t pid,
 #ifdef __linux__
   // load from /proc/<pid>/exe
   char proc[128];
-  char filename[512];
+  char filename[PATH_MAX];
   absl::SNPrintF(proc, sizeof(proc) - 1, "/proc/%u/exe", pid);
   const ssize_t size = readlink(proc, filename, sizeof(filename) - 1);
   if (size == -1) {
@@ -418,18 +430,18 @@ bool IPCPathManager::IsValidServer(uint32_t pid,
   server_pid_ = pid;
 #endif  // __linux__
 
-  VLOG(1) << "server path: " << server_path << " " << server_path_;
-  if (server_path == server_path_) {
+  VLOG(1) << "server path: " << real_server_path << " " << server_path_;
+  if (real_server_path == server_path_) {
     return true;
   }
 
 #ifdef __linux__
-  if (absl::StrCat(server_path, " (deleted)") == server_path_) {
-    LOG(WARNING) << server_path << " on disk is modified";
+  if (absl::StrCat(real_server_path, " (deleted)") == server_path_) {
+    LOG(WARNING) << real_server_path << " on disk is modified";
     // If a user updates the server binary on disk during the server is running,
     // "readlink /proc/<pid>/exe" returns a path with the " (deleted)" suffix.
     // We allow the special case.
-    server_path_ = std::string(server_path);
+    server_path_ = std::string(real_server_path);
     return true;
   }
 #endif  // __linux__
