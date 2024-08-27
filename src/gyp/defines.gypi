@@ -76,6 +76,10 @@
     # use_system_gtest represents if system version or bundled version
     # of gtest library is used.
     'use_system_gtest%': '0',
+
+    # use_system_jsoncpp represents if system version or bundled version
+    # of jsoncpp library is used.
+    'use_system_jsoncpp%': '0',
   },
   'target_defaults': {
     'defines': [
