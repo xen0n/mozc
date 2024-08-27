@@ -128,7 +128,7 @@
           'all_dependent_settings': {
             'link_settings': {
               'libraries': [
-                '-labsl_flags -labsl_flags_internal -labsl_synchronization -labsl_flags_reflection -labsl_flags_marshalling',
+                '-labsl_flags_internal -labsl_raw_hash_set -labsl_city -labsl_hash -labsl_low_level_hash -labsl_synchronization -labsl_flags_reflection -labsl_flags_marshalling',
               ],
             },
           },
@@ -178,7 +178,7 @@
           'all_dependent_settings': {
             'link_settings': {
               'libraries': [
-                '-labsl_flags_commandlineflag_internal -labsl_flags_usage -labsl_flags_usage_internal -labsl_flags_internal -labsl_flags -labsl_flags_private_handle_accessor -labsl_flags_program_name -labsl_flags_parse',
+                '-labsl_flags_commandlineflag_internal -labsl_flags_usage -labsl_flags_usage_internal -labsl_flags_internal -labsl_flags_private_handle_accessor -labsl_flags_program_name -labsl_flags_parse',
               ],
             },
           },
@@ -398,7 +398,7 @@
           'all_dependent_settings': {
             'link_settings': {
               'libraries': [
-                '-labsl_synchronization -labsl_flags -labsl_graphcycles_internal -labsl_string_view',
+                '-labsl_synchronization -labsl_graphcycles_internal -labsl_string_view',
               ],
             },
           },

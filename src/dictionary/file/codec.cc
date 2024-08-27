@@ -42,6 +42,10 @@
 #include "dictionary/file/codec_interface.h"
 #include "dictionary/file/codec_util.h"
 #include "dictionary/file/section.h"
+#if defined(ABSL_LTS_RELEASE_VERSION) && ABSL_LTS_RELEASE_VERSION >= 20240116
+// Abseil 20240116.0 needs explicit inclusion for StrCat
+#include "absl/strings/str_cat.h"
+#endif
 #include "absl/status/status.h"
 
 namespace mozc {
