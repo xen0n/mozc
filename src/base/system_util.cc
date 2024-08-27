@@ -248,12 +248,22 @@ std::string UserProfileDirectoryImpl::GetUserProfileDirectory() const {
   return "";
 
 #elif defined(TARGET_OS_IPHONE) && TARGET_OS_IPHONE
+  const char *configuration_directory_env = Environ::GetEnv("MOZC_CONFIGURATION_DIRECTORY");
+  if (configuration_directory_env) {
+    return configuration_directory_env;
+  }
+
   // On iOS, use Caches directory instead of Application Spport directory
   // because the support directory doesn't exist by default.  Also, it is backed
   // up by iTunes and iCloud.
   return FileUtil::JoinPath({MacUtil::GetCachesDirectory(), kProductPrefix});
 
 #elif defined(_WIN32)
+  const char *configuration_directory_env = Environ::GetEnv("MOZC_CONFIGURATION_DIRECTORY");
+  if (configuration_directory_env) {
+    return configuration_directory_env;
+  }
+
   DCHECK(SUCCEEDED(Singleton<LocalAppDataDirectoryCache>::get()->result()));
   std::string dir = Singleton<LocalAppDataDirectoryCache>::get()->path();
 
@@ -266,6 +276,11 @@ std::string UserProfileDirectoryImpl::GetUserProfileDirectory() const {
   return FileUtil::JoinPath(dir, kProductNameInEnglish);
 
 #elif defined(TARGET_OS_OSX) && TARGET_OS_OSX
+  const char *configuration_directory_env = Environ::GetEnv("MOZC_CONFIGURATION_DIRECTORY");
+  if (configuration_directory_env) {
+    return configuration_directory_env;
+  }
+
   std::string dir = MacUtil::GetApplicationSupportDirectory();
 #ifdef GOOGLE_JAPANESE_INPUT_BUILD
   dir = FileUtil::JoinPath(dir, "Google");
@@ -278,6 +293,11 @@ std::string UserProfileDirectoryImpl::GetUserProfileDirectory() const {
 #endif  //  GOOGLE_JAPANESE_INPUT_BUILD
 
 #elif defined(__linux__)
+  const char *configuration_directory_env = Environ::GetEnv("MOZC_CONFIGURATION_DIRECTORY");
+  if (configuration_directory_env) {
+    return configuration_directory_env;
+  }
+
   // 1. If "$HOME/.mozc" already exists,
   //    use "$HOME/.mozc" for backward compatibility.
   // 2. If $XDG_CONFIG_HOME is defined
@@ -411,6 +431,11 @@ class ProgramFilesX86Cache {
 #endif  // _WIN32
 
 std::string SystemUtil::GetServerDirectory() {
+  const char *server_directory_env = Environ::GetEnv("MOZC_SERVER_DIRECTORY");
+  if (server_directory_env) {
+    return server_directory_env;
+  }
+
 #ifdef _WIN32
   DCHECK(SUCCEEDED(Singleton<ProgramFilesX86Cache>::get()->result()));
 #if defined(GOOGLE_JAPANESE_INPUT_BUILD)
@@ -467,6 +492,11 @@ std::string SystemUtil::GetToolPath() {
 }
 
 std::string SystemUtil::GetDocumentDirectory() {
+  const char *documents_directory_env = Environ::GetEnv("MOZC_DOCUMENTS_DIRECTORY");
+  if (documents_directory_env) {
+    return documents_directory_env;
+  }
+
 #if defined(__linux__)
 
 #ifndef MOZC_DOCUMENT_DIR
