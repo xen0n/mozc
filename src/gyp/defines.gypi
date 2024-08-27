@@ -72,6 +72,10 @@
     # use_system_abseil_cpp represents if system version or bundled version
     # of abseil-cpp library is used.
     'use_system_abseil_cpp%': '0',
+
+    # use_system_gtest represents if system version or bundled version
+    # of gtest library is used.
+    'use_system_gtest%': '0',
   },
   'target_defaults': {
     'defines': [
